@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Video Player</title>
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self' https:;
+               script-src 'self' https: 'unsafe-inline';
+               style-src 'self' 'unsafe-inline';
+               img-src 'self' data: https:;
+               media-src https:;
+               connect-src 'self' https:;">
+<style>
+:root{--bg:#000;--border:#e5e7eb}
+*{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+body{margin:0;background:#fff}
+.wrap{max-width:900px;margin:0 auto;padding:12px}
+.player-shell{position:relative;width:100%;aspect-ratio:16/9;background:#000;border:1px solid var(--border)}
+.player-shell video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.btn{padding:10px 14px;border:0;border-radius:6px;background:#2563eb;color:#fff;font-weight:700;cursor:pointer}
+.btn.ghost{background:#111827}
+@media(max-width:640px){.player-shell{aspect-ratio:9/16}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="player-shell">
+    <video id="player" controls playsinline preload="metadata"></video>
+  </div>
+
+  <div class="controls">
+    <button class="btn ghost" id="copyBtn">Copy Link</button>
+    <button class="btn" id="dlBtn">Download</button>
+  </div>
+</div>
+
+ <!-- Histats.com  (div with counter) --><div id="histats_counter"></div>
+<!-- Histats.com  START  (aync)-->
+<script type="text/javascript">var _Hasync= _Hasync|| [];
+_Hasync.push(['Histats.startgif', '1,4989485,4,10047,"div#histatsC {position: absolute;top:0px;left:0px;}body>div#histatsC {position: fixed;}"']);
+_Hasync.push(['Histats.fasi', '1']);
+_Hasync.push(['Histats.track_hits', '']);
+(function() {
+var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+hs.src = ('//s10.histats.com/js15_gif_as.js');
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+})();</script>
+<noscript><a href="/" alt="" target="_blank" ><div id="histatsC"><img border="0" src="//s4is.histats.com/stats/i/4989485.gif?4989485&103"></div></a>
+</noscript>
+<!-- Histats.com  END  -->
+
+<script>
+(function(){
+  const q=new URLSearchParams(location.search);
+  const v=document.getElementById('player');
+
+  // SMARTLINK
+  const SMARTLINK="https://www.effectivegatecpm.com/qk6w8r02?key=5ebb916cf9be28eed954ed5a148d7279";
+
+  // MODE ?src=MP4
+  let src=(q.get('src')||'').trim();
+  if(src){
+    src=decodeURIComponent(src);
+    if(src.startsWith('http://')) src='https://'+src.slice(7);
+    v.src=src;
+    v.load();
+  }
+
+  // MODE ?id=VIDEY
+  const id=(q.get('id')||'').trim();
+  if(!src && id){
+    const e=encodeURIComponent(id);
+    const cands=[
+      'https://cdn.videy.co/'+e+'.mp4',
+      'https://cdn.videy.co/'+e+'.m4v',
+      'https://cdn-videys.com/'+e+'.mp4',
+      'https://cdn-videys.com/'+e+'.m4v'
+    ];
+    let i=0;
+    const next=()=>{
+      if(i>=cands.length) return;
+      v.src=cands[i++]+'?t='+(Date.now());
+      v.load();
+    };
+    next();
+    v.addEventListener('error',next);
+  }
+
+  // AUTO ASPECT RATIO
+  v.addEventListener('loadedmetadata',()=>{
+    const shell=v.closest('.player-shell');
+    if(v.videoWidth>v.videoHeight) shell.style.aspectRatio='16/9';
+    else shell.style.aspectRatio='9/16';
+  });
+
+  document.getElementById('copyBtn').onclick=async()=>{
+    try{await navigator.clipboard.writeText(location.href);}
+    catch{prompt('Copy:',location.href);}
+  };
+  document.getElementById('dlBtn').onclick=()=>location.href=SMARTLINK;
+
+  // Delay ads (popunder + native)
+  window.addEventListener('load',()=>{
+    setTimeout(()=>{
+      const s1=document.createElement('script');
+      s1.async=true;s1.setAttribute('data-cfasync','false');
+      s1.src='https://pl28301296.effectivegatecpm.com/48e9e65b11e6dfdb01a27df34672890d/invoke.js';
+      document.body.appendChild(s1);
+      const c=document.createElement('div');
+      c.id='container-54f40a4ce292a9187e0b9a0feb507f92';
+      document.body.appendChild(c);
+
+      const s2=document.createElement('script');
+      s2.src='https://pl28301269.effectivegatecpm.com/21/7a/28/217a2837865901494ea191d0dbd1707e.js';
+      document.body.appendChild(s2);
+    },1200);
+  });
+})();
+</script>
+</body>
+</html>
