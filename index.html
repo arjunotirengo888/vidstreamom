@@ -21,21 +21,28 @@
             background-color: #ffffff;
             height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
             overflow: hidden;
         }
 
-        /* Tombol Video Utama di Tengah */
+        /* Container Tombol Utama */
         .main-container {
-            text-align: center;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-bottom: 250px; /* Geser tombol ke atas agar tidak tertutup di HP */
             z-index: 1;
+        }
+
+        @media (min-width: 768px) {
+            .main-container { padding-bottom: 0; } /* Tengah sempurna untuk Desktop */
         }
 
         .btn-video-link {
             background: none;
             border: none;
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
             cursor: pointer;
             display: flex;
@@ -43,50 +50,46 @@
             justify-content: center;
             gap: 8px;
             text-decoration: none;
-            transition: transform 0.1s;
         }
 
-        .btn-video-link:active { transform: scale(0.96); }
         .blue-part { color: var(--video-blue); }
         .yellow-part { color: var(--video-yellow); }
 
-        /* Container Popup */
+        /* Overlay */
         .cookie-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.3); /* Overlay tipis transparan */
+            background: rgba(0, 0, 0, 0.3);
             display: flex;
             z-index: 9999;
-            pointer-events: none; /* Klik bisa tembus ke belakang jika area kosong */
+            pointer-events: none;
         }
 
-        /* Card Cookie */
+        /* Popup Card */
         .cookie-card {
             background: #ffffff;
-            pointer-events: auto; /* Tombol tetap bisa diklik */
+            pointer-events: auto;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             display: flex;
             flex-direction: column;
             text-align: center;
-            padding: 24px;
             box-sizing: border-box;
         }
 
         .cookie-card h2 {
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 700;
             margin: 0 0 10px 0;
             color: #000;
         }
 
         .cookie-card p {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-gray);
-            line-height: 1.5;
-            margin: 0 0 20px 0;
+            line-height: 1.4;
+            margin: 0 0 15px 0;
         }
 
-        /* Group Tombol */
         .button-group {
             display: flex;
             gap: 10px;
@@ -94,7 +97,7 @@
 
         .btn-base {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
@@ -102,7 +105,6 @@
             border: 1px solid #dddfe2;
             background: #ffffff;
             color: #4b4f56;
-            transition: background 0.2s;
         }
 
         .btn-primary {
@@ -111,10 +113,9 @@
             border: none;
         }
 
-        /* Branding CookieAdmin */
         .cookie-footer {
-            margin-top: 15px;
-            font-size: 12px;
+            margin-top: 12px;
+            font-size: 11px;
             color: #8a8d91;
             display: flex;
             align-items: center;
@@ -125,14 +126,9 @@
         .admin-brand {
             color: var(--admin-cyan);
             font-weight: 800;
-            display: flex;
-            align-items: center;
-            gap: 3px;
         }
 
-        /* RESPONSIVE LOGIC */
-
-        /* Tampilan Desktop (Pojok Kiri Bawah) */
+        /* Desktop View: Pojok Kiri Bawah */
         @media (min-width: 768px) {
             .cookie-overlay {
                 align-items: flex-end;
@@ -140,25 +136,26 @@
                 padding: 20px;
             }
             .cookie-card {
-                width: 380px;
+                width: 360px;
+                padding: 20px;
                 border-radius: 12px;
             }
         }
 
-        /* Tampilan Mobile (Full Bottom Sheet) */
+        /* Mobile View: Bottom Sheet */
         @media (max-width: 767px) {
             .cookie-overlay {
                 align-items: flex-end;
-                justify-content: center;
             }
             .cookie-card {
                 width: 100%;
                 border-radius: 20px 20px 0 0;
-                padding: 30px 20px;
+                padding: 25px 20px 15px 20px;
             }
             .button-group {
-                flex-direction: column; /* Tombol ke bawah di HP */
+                flex-direction: column;
             }
+            .btn-base { padding: 12px; }
         }
 
         .hidden { display: none !important; }
@@ -198,7 +195,6 @@
     </div>
 
     <script>
-        // Logika Rotator Link (dari file index.php)
         const urlParams = new URLSearchParams(window.location.search);
         const videoId = urlParams.get('id') || 'default';
 
