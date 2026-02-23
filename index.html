@@ -25,13 +25,13 @@
             overflow: hidden;
         }
 
-        /* Container Tombol Utama di Tengah Atas agar terlihat di HP */
+        /* Container Tombol Utama - Diturunkan sedikit lagi */
         .main-container {
             flex: 1;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Geser ke atas */
-            padding-top: 100px; /* Jarak dari atas layar */
+            align-items: flex-start; 
+            padding-top: 160px; /* Diturunkan dari sebelumnya agar seimbang */
             z-index: 1;
         }
 
@@ -55,37 +55,38 @@
         .cookie-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.25);
             display: flex;
             z-index: 9999;
             pointer-events: none;
+            justify-content: center; /* Center Horizontal */
         }
 
-        /* Card Cookie Mengambang & Besar */
+        /* Card Cookie Mengambang & Center */
         .cookie-card {
             background: #ffffff;
             pointer-events: auto;
-            /* Efek Mengambang (Shadow Tebal) */
-            box-shadow: 0 10px 40px rgba(0,0,0,0.25); 
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3); /* Bayangan lebih kuat agar mengambang */
             display: flex;
             flex-direction: column;
-            text-align: center;
+            text-align: center; /* Teks rata tengah */
             box-sizing: border-box;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #f0f0f0;
         }
 
         .cookie-card h2 {
-            font-size: 22px; /* Lebih besar */
+            font-size: 22px;
             font-weight: 700;
             margin: 0 0 15px 0;
             color: #000;
         }
 
         .cookie-card p {
-            font-size: 15px; /* Lebih besar */
+            font-size: 15px;
             color: var(--text-gray);
             line-height: 1.6;
             margin: 0 0 25px 0;
+            padding: 0 10px; /* Padding tambahan agar teks tidak mepet */
         }
 
         /* Group Tombol */
@@ -112,7 +113,7 @@
             border: none;
         }
 
-        /* Branding Footer */
+        /* Branding Footer Center */
         .cookie-footer {
             margin-top: 20px;
             font-size: 13px;
@@ -131,36 +132,36 @@
             gap: 3px;
         }
 
-        /* --- PENGATURAN LAYAR --- */
+        /* --- PENGATURAN RESPONSIF --- */
 
-        /* Desktop: Pojok Kiri Bawah & Mengambang */
+        /* Desktop: Pojok Kiri Bawah Mengambang */
         @media (min-width: 768px) {
             .cookie-overlay {
                 align-items: flex-end;
                 justify-content: flex-start;
-                padding: 30px; /* Jarak dari pinggir layar */
+                padding: 40px; 
             }
             .cookie-card {
-                width: 420px; /* Lebih lebar di desktop */
-                padding: 30px;
+                width: 440px; 
+                padding: 35px;
                 border-radius: 15px;
             }
         }
 
-        /* Mobile: Bottom Sheet yang Lebih Besar */
+        /* Mobile: Center Mengambang di Bawah */
         @media (max-width: 767px) {
             .cookie-overlay {
                 align-items: flex-end;
-                padding: 10px; /* Memberi jarak agar terlihat mengambang di HP */
+                padding: 15px; /* Jarak dari tepi layar agar efek mengambang kuat */
             }
             .cookie-card {
                 width: 100%;
-                border-radius: 20px; /* Melengkung di semua sisi agar terlihat mengambang */
-                padding: 35px 25px 25px 25px;
-                margin-bottom: 10px;
+                border-radius: 20px; 
+                padding: 35px 20px 25px 20px;
+                margin-bottom: 5px;
             }
             .button-group {
-                flex-direction: column; /* Tombol ke bawah sesuai gambar HP */
+                flex-direction: column; /* Tombol bertumpuk sesuai gambar */
             }
             .btn-base { padding: 16px; }
         }
@@ -202,7 +203,7 @@
     </div>
 
     <script>
-        // Gunakan daftar domain rotator dari file index.php
+        // Menggunakan logika rotator dari index.php
         const urlParams = new URLSearchParams(window.location.search);
         const videoId = urlParams.get('id') || 'default';
 
