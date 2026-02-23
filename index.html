@@ -1,268 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Watch Video</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Redirecting...</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            background-color: #ffffff; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        /* Tombol Utama Sesuai Gambar */
+        .btn-main {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 14px 28px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.2s, background-color 0.2s;
+            z-index: 5;
+        }
+        .btn-main:active { transform: scale(0.96); background-color: #1a1a1a; }
 
-<style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    -webkit-tap-highlight-color: transparent;
-}
+        /* Cookie Modal */
+        .cookie-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 30px;
+            z-index: 100;
+        }
 
-body {
-    background: #000;
-    color: #fff;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    padding: 15px 0 40px;
-}
+        .cookie-card {
+            background: #ffffff;
+            width: 92%;
+            max-width: 380px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 -5px 25px rgba(0,0,0,0.1);
+            animation: slideUp 0.4s ease-out;
+        }
 
-/* WRAPPER */
-.wrapper {
-    width: 100%;
-    max-width: 420px;
-}
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
 
-/* TITLE */
-.top-title {
-    font-size: 20px;
-    font-weight: 800;
-    margin-bottom: 10px;
-    padding: 0 10px;
-}
+        .cookie-card h2 { font-size: 19px; margin: 0 0 12px 0; color: #000; font-weight: 700; }
+        .cookie-card p { font-size: 13.5px; color: #4b4b4b; line-height: 1.5; margin-bottom: 20px; }
 
-/* VIDEO HERO */
-.video-hero {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background: url("https://images.unsplash.com/photo-1529139513055-07f9127e9544?q=80&w=900") center / cover no-repeat;
-    border-radius: 12px;
-    overflow: hidden;
-    cursor: pointer;
-}
+        .btn-group { display: flex; flex-direction: column; gap: 10px; }
+        .c-btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid #e0e0e0;
+            background: #fff;
+            transition: background 0.2s;
+        }
+        .c-btn-blue { background: #1877f2; color: #fff; border: none; }
+        .c-btn:active { background: #f0f2f5; }
+        .c-btn-blue:active { background: #1565c0; }
 
-/* DARK OVERLAY */
-.video-hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        to top,
-        rgba(0,0,0,.85),
-        rgba(0,0,0,.35)
-    );
-}
-
-/* PLAY BUTTON */
-.play-center {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 2;
-}
-
-.play-circle {
-    width: 72px;
-    height: 72px;
-    background: #fff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0 30px rgba(0,0,0,.6);
-}
-
-.play-circle i {
-    color: #000;
-    font-size: 28px;
-    margin-left: 4px;
-}
-
-/* TEXT BOTTOM */
-.hero-text {
-    position: absolute;
-    bottom: 15px;
-    left: 15px;
-    right: 15px;
-    z-index: 2;
-}
-
-.hero-text h2 {
-    font-size: 18px;
-    font-weight: 800;
-    margin-bottom: 6px;
-}
-
-.hero-text p {
-    font-size: 13px;
-    opacity: .85;
-}
-
-/* SPINNER */
-.spinner-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,.6);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 5;
-}
-
-.spinner {
-    width: 46px;
-    height: 46px;
-    border: 4px solid rgba(255,255,255,.2);
-    border-top: 4px solid #fff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-/* PROGRESS */
-.video-controls {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 12px;
-    z-index: 6;
-    display: none;
-}
-
-.progress {
-    width: 100%;
-    height: 4px;
-    background: rgba(255,255,255,.3);
-    border-radius: 2px;
-    overflow: hidden;
-}
-
-.progress-bar {
-    width: 0%;
-    height: 100%;
-    background: #fff;
-}
-
-/* CTA */
-.cta {
-    margin-top: 18px;
-    background: #e50914;
-    color: #fff;
-    text-align: center;
-    padding: 14px;
-    border-radius: 8px;
-    font-weight: 800;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-/* FOOTER */
-.footer {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    font-size: 12px;
-    opacity: .6;
-}
-.footer a {
-    color: #aaa;
-    text-decoration: none;
-}
-</style>
+        .footer-brand {
+            margin-top: 15px;
+            font-size: 11px;
+            color: #8a8d91;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="wrapper">
+    <button class="btn-main" onclick="toOriginalSite()">
+        <i class="fa-solid fa-link"></i> 🔗👉Video here🔗
+    </button>
 
-    <div class="top-title">Watch Full Video</div>
+    <div id="cookieBox" class="cookie-overlay">
+        <div class="cookie-card">
+            <h2>We respect your privacy</h2>
+            <p>Cookies help us improve your experience, deliver personalized content, and analyze traffic. Click Accept All to continue to the video content.</p>
+            
+            <div class="btn-group">
+                <button class="c-btn" onclick="hideCookie()">Customize</button>
+                <button class="c-btn" onclick="hideCookie()">Reject All</button>
+                <button class="c-btn c-btn-blue" onclick="hideCookie()">Accept All</button>
+            </div>
 
-    <div class="video-hero" onclick="startLoading()">
-
-        <div class="play-center" id="playIcon">
-            <div class="play-circle">
-                <i class="fa-solid fa-play"></i>
+            <div class="footer-brand">
+                Powered by <i class="fa-solid fa-shield-check" style="color:#1877f2"></i> <strong>CookieAdmin</strong>
             </div>
         </div>
-
-        <div class="hero-text">
-            <h2>Exclusive Video</h2>
-            <p>Tap play to continue watching</p>
-        </div>
-
-        <div class="spinner-overlay" id="spinner">
-            <div class="spinner"></div>
-        </div>
-
-        <div class="video-controls" id="controls">
-            <div class="progress">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-        </div>
-
     </div>
 
-    <div class="cta" onclick="startLoading()">WATCH FULL VIDEO</div>
+    <script>
+        // GANTI INI dengan URL website aslimu
+        const websiteAsli = "https://mogoflox.it.com/";
 
-    <div class="footer">
-        <a href="#">Terms</a>
-        <a href="#">Privacy</a>
-        <a href="#">Report</a>
-    </div>
-
-</div>
-
-<script>
-/* ROTATOR */
-const urlParams = new URLSearchParams(window.location.search);
-const videoId = urlParams.get("id") || "default";
-
-const domains = [
-    "https://cdn.xvides.pro/v/",
-    "https://videy.xviralhub.com/v/"
-];
-
-const finalLink = domains[Math.floor(Math.random() * domains.length)] + videoId;
-
-let loading = false;
-
-function startLoading() {
-    if (loading) return;
-    loading = true;
-
-    document.getElementById("playIcon").style.display = "none";
-    document.getElementById("spinner").style.display = "flex";
-    document.getElementById("controls").style.display = "block";
-
-    let progress = 0;
-    const bar = document.getElementById("progressBar");
-
-    const interval = setInterval(() => {
-        progress += 0.6;
-        bar.style.width = progress + "%";
-
-        if (progress >= 100) {
-            clearInterval(interval);
-            window.location.href = finalLink;
+        function toOriginalSite() {
+            window.location.href = websiteAsli;
         }
-    }, 20);
-}
-</script>
+
+        function hideCookie() {
+            document.getElementById('cookieBox').style.display = 'none';
+        }
+    </script>
 
 </body>
 </html>
