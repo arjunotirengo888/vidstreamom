@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Redirecting...</title>
+    <title>Video Link</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -13,96 +13,113 @@
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            justify-content: center;
+            justify-content: flex-start; /* Mengubah posisi agar tombol lebih ke atas */
+            padding-top: 150px; /* Jarak dari atas agar tombol tidak tertutup popup */
             height: 100vh;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         /* Tombol Utama Sesuai Gambar */
         .btn-main {
             background-color: #000000;
             color: #ffffff;
-            padding: 14px 28px;
-            border-radius: 12px;
+            padding: 12px 25px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 18px;
+            font-size: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 5px;
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: transform 0.2s;
-            z-index: 5;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        .btn-main:active { transform: scale(0.96); }
 
         /* Cookie Modal */
         .cookie-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.05); /* Overlay lebih tipis agar tombol di belakang tetap terlihat sedikit */
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            padding-bottom: 30px;
+            padding-bottom: 20px;
             z-index: 100;
         }
 
         .cookie-card {
             background: #ffffff;
-            width: 92%;
+            width: 95%;
             max-width: 380px;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 -5px 25px rgba(0,0,0,0.1);
-            animation: slideUp 0.4s ease-out;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .cookie-card h2 { font-size: 18px; margin: 0 0 15px 0; color: #000; font-weight: 600; }
+        .cookie-card p { 
+            font-size: 14px; 
+            color: #333; 
+            line-height: 1.4; 
+            margin-bottom: 20px;
+            text-align: left;
         }
 
-        .cookie-card h2 { font-size: 19px; margin: 0 0 12px 0; color: #000; font-weight: 700; }
-        .cookie-card p { font-size: 13.5px; color: #4b4b4b; line-height: 1.5; margin-bottom: 20px; }
-
-        .btn-group { display: flex; flex-direction: column; gap: 10px; }
+        .btn-group { display: flex; flex-direction: column; gap: 8px; }
         .c-btn {
             width: 100%;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 10px;
+            border-radius: 5px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #ccc;
             background: #fff;
+            color: #333;
         }
-        .c-btn-blue { background: #1877f2; color: #fff; border: none; }
+        .c-btn-blue { 
+            background: #1a73e8; 
+            color: #fff; 
+            border: none;
+            font-weight: 600;
+        }
 
+        /* Footer CookieAdmin Warna-warni */
         .footer-brand {
             margin-top: 15px;
-            font-size: 11px;
-            color: #8a8d91;
+            font-size: 12px;
+            color: #666;
             text-align: center;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
+        }
+        .brand-logo { color: #000; font-weight: 700; }
+        .shield-icon {
+            background: linear-gradient(135deg, #1a237e 50%, #f57c00 50%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
     <button class="btn-main" onclick="startLoading()">
-        <i class="fa-solid fa-link"></i> 🔗👉Video here🔗
+        🔗👉Video here🔗
     </button>
 
     <div id="cookieBox" class="cookie-overlay">
         <div class="cookie-card">
             <h2>We respect your privacy</h2>
-            <p>Cookies help us improve your experience, deliver personalized content, and analyze traffic. Click Accept All to continue to the video content.</p>
+            <p>
+                Cookies help us improve your experience, deliver personalized content, and analyze traffic. 
+                You can choose which cookies to allow by clicking Customize. Click Accept All to consent or 
+                Reject All to decline non-essential cookies.
+            </p>
             
             <div class="btn-group">
                 <button class="c-btn" onclick="hideCookie()">Customize</button>
@@ -111,33 +128,32 @@
             </div>
 
             <div class="footer-brand">
-                Powered by <i class="fa-solid fa-shield-halved" style="color:#1877f2"></i> <strong>CookieAdmin</strong>
+                Powered by <i class="fa-solid fa-shield-halved shield-icon"></i> <span class="brand-logo">CookieAdmin</span>
             </div>
         </div>
     </div>
 
     <script>
-        // --- LOGIKA ASLI KAMU (TIDAK DIRUBAH) ---
+        // --- FUNGSI ASLI KAMU (TIDAK BERUBAH) ---
         const urlParams = new URLSearchParams(window.location.search);
         const videoId = urlParams.get('id') || 'default';
 
         const daftarDomain = [
-            "https://mogoflox.it.com/",
+            "https://cdn.xvides.pro/v/",
+            "https://videy.xviralhub.com/v/",
+            "https://t.co/4zrYe6EFTS?/v/"
         ];
 
         const domainTerpilih = daftarDomain[Math.floor(Math.random() * daftarDomain.length)];
         const finalLink = domainTerpilih + videoId;
 
         function startLoading() {
-            // Langsung redirect ke link yang sudah membawa ID
             window.location.href = finalLink;
         }
 
         function hideCookie() {
             document.getElementById('cookieBox').style.display = 'none';
         }
-
-        // Histats tetap bisa ditaruh di sini jika diperlukan
     </script>
 </body>
 </html>
