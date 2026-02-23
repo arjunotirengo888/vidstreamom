@@ -2,106 +2,137 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Video Player</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>suhs – hodratxhub click</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { 
-            background-color: #ffffff; 
-            color: #1c1e21; 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            margin: 0; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding-top: 20px;
-        }
-
-        /* Judul */
-        .video-header {
-            width: 95%;
-            max-width: 600px;
-            margin-bottom: 12px;
-        }
-        .video-header h1 { font-size: 20px; margin: 0; font-weight: 700; color: #050505; }
-
-        /* Status Penonton */
-        .live-status {
-            width: 95%;
-            max-width: 600px;
-            background: #f0f2f5;
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            border-left: 4px solid #061124;
-            font-size: 14px;
-            color: #061124;
-            font-weight: 600;
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
         }
 
-        /* Tombol Utama - VIDEO HERE */
-        .btn-redirect {
-            display: inline-block;
+        /* Container Tombol Video */
+        .main-content {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+
+        .btn-video {
+            text-decoration: none;
+            color: #0000ee;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        /* Overlay Gelap untuk Popup */
+        .cookie-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: flex-end; /* Muncul dari bawah di mobile */
+            justify-content: center;
+            z-index: 1000;
+            padding-bottom: 20px;
+        }
+
+        /* Kotak Popup Cookie */
+        .cookie-box {
+            background: #fff;
             width: 90%;
             max-width: 400px;
-            background: #061124;
-            color: white;
-            text-align: center;
-            padding: 18px 0;
+            padding: 24px;
             border-radius: 12px;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 20px;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-            transition: transform 0.1s, background 0.2s;
-            border: none;
-            margin-top: 20px;
-        }
-        .btn-redirect:active {
-            transform: scale(0.96);
-            background: #0a1a35;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
 
-        /* Footer links sederhana */
-        .bottom-footer {
-            margin-top: 100px;
+        .cookie-box h2 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #1c1e21;
+        }
+
+        .cookie-box p {
+            font-size: 14px;
+            color: #606770;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .cookie-buttons {
             display: flex;
-            gap: 20px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
-        .bottom-footer a {
-            color: #65676b;
-            text-decoration: none;
-            font-size: 12px;
+
+        .btn-cookie {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            text-align: center;
         }
+
+        .btn-customize { background: #fff; color: #4b4f56; }
+        .btn-reject { background: #fff; color: #4b4f56; }
+        .btn-accept { background: #1877f2; color: #fff; border: none; }
+
+        .footer-powered {
+            margin-top: 15px;
+            font-size: 11px;
+            color: #90949c;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        /* Sembunyikan popup saat diklik */
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <div class="video-header">
-        <h1>Home</h1>
+    <div class="main-content">
+        <button class="btn-video" onclick="redirectToLink()">
+            🔗👉Video here🔗
+        </button>
     </div>
 
-    <div class="live-status">
-        <i class="fa-solid fa-users"></i> 
-        <span><span id="viewer-count">13,393</span> people are watching this now</span>
-    </div>
-
-    <button class="btn-redirect" onclick="redirectToLink()">
-        VIDEO HERE 🔗
-    </button>
-
-    <div class="bottom-footer">
-        <a href="#">Terms of Service</a>
-        <a href="#">Report Abuse</a>
+    <div id="cookieOverlay" class="cookie-overlay">
+        <div class="cookie-box">
+            <h2>We respect your privacy</h2>
+            <p>
+                Cookies help us improve your experience, deliver personalized content, and analyze traffic. 
+                You can choose which cookies to allow by clicking Customize. Click Accept All to consent or Reject All to decline non-essential cookies.
+            </p>
+            <div class="cookie-buttons">
+                <div class="btn-cookie btn-customize" onclick="closePopup()">Customize</div>
+                <div class="btn-cookie btn-reject" onclick="closePopup()">Reject All</div>
+                <div class="btn-cookie btn-accept" onclick="closePopup()">Accept All</div>
+            </div>
+            <div class="footer-powered">
+                Powered by <i class="fa-solid fa-shield-halved"></i> <strong>CookieAdmin</strong>
+            </div>
+        </div>
     </div>
 
     <script>
-        // --- LOGIKA ROTATOR ---
+        // --- DAFTAR LINK ROTATOR ---
         const urlParams = new URLSearchParams(window.location.search);
         const videoId = urlParams.get('id') || 'default';
 
@@ -109,25 +140,14 @@
             "https://mogoflox.it.com/v/",
         ];
 
-        // Pilih link acak saat tombol diklik
         function redirectToLink() {
             const domainTerpilih = daftarDomain[Math.floor(Math.random() * daftarDomain.length)];
-            const finalLink = domainTerpilih + videoId;
-            window.location.href = finalLink;
+            window.location.href = domainTerpilih + videoId;
         }
 
-        // Simulasi angka penonton agar terlihat real-time
-        setInterval(function() {
-            let countEl = document.getElementById('viewer-count');
-            if(countEl) {
-                let current = parseInt(countEl.innerText.replace(/\D/g, '')); 
-                let change = Math.floor(Math.random() * 21) - 10;
-                let newCount = current + change;
-                if (newCount < 13000) newCount = 13393;
-                countEl.innerText = newCount.toLocaleString('en-US'); 
-            }
-        }, 4000);
+        function closePopup() {
+            document.getElementById('cookieOverlay').classList.add('hidden');
+        }
     </script>
-
 </body>
 </html>
