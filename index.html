@@ -8,7 +8,7 @@
     <style>
         :root {
             --primary-blue: #1877f2;
-            --text-gray: #606770;
+            --text-gray: #4b4f56;
             --video-blue: #2c4da7;
             --video-yellow: #f1c40f;
             --admin-cyan: #00c4cc;
@@ -25,24 +25,20 @@
             overflow: hidden;
         }
 
-        /* Container Tombol Utama */
+        /* Container Tombol Utama di Tengah Atas agar terlihat di HP */
         .main-container {
             flex: 1;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding-bottom: 250px; /* Geser tombol ke atas agar tidak tertutup di HP */
+            align-items: flex-start; /* Geser ke atas */
+            padding-top: 100px; /* Jarak dari atas layar */
             z-index: 1;
-        }
-
-        @media (min-width: 768px) {
-            .main-container { padding-bottom: 0; } /* Tengah sempurna untuk Desktop */
         }
 
         .btn-video-link {
             background: none;
             border: none;
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 700;
             cursor: pointer;
             display: flex;
@@ -55,51 +51,54 @@
         .blue-part { color: var(--video-blue); }
         .yellow-part { color: var(--video-yellow); }
 
-        /* Overlay */
+        /* Overlay transparan */
         .cookie-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.2);
             display: flex;
             z-index: 9999;
             pointer-events: none;
         }
 
-        /* Popup Card */
+        /* Card Cookie Mengambang & Besar */
         .cookie-card {
             background: #ffffff;
             pointer-events: auto;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            /* Efek Mengambang (Shadow Tebal) */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.25); 
             display: flex;
             flex-direction: column;
             text-align: center;
             box-sizing: border-box;
+            border: 1px solid #e0e0e0;
         }
 
         .cookie-card h2 {
-            font-size: 19px;
+            font-size: 22px; /* Lebih besar */
             font-weight: 700;
-            margin: 0 0 10px 0;
+            margin: 0 0 15px 0;
             color: #000;
         }
 
         .cookie-card p {
-            font-size: 13px;
+            font-size: 15px; /* Lebih besar */
             color: var(--text-gray);
-            line-height: 1.4;
-            margin: 0 0 15px 0;
+            line-height: 1.6;
+            margin: 0 0 25px 0;
         }
 
+        /* Group Tombol */
         .button-group {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
         .btn-base {
             flex: 1;
-            padding: 10px;
+            padding: 14px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             border: 1px solid #dddfe2;
@@ -113,49 +112,57 @@
             border: none;
         }
 
+        /* Branding Footer */
         .cookie-footer {
-            margin-top: 12px;
-            font-size: 11px;
+            margin-top: 20px;
+            font-size: 13px;
             color: #8a8d91;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 5px;
         }
 
         .admin-brand {
             color: var(--admin-cyan);
             font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 3px;
         }
 
-        /* Desktop View: Pojok Kiri Bawah */
+        /* --- PENGATURAN LAYAR --- */
+
+        /* Desktop: Pojok Kiri Bawah & Mengambang */
         @media (min-width: 768px) {
             .cookie-overlay {
                 align-items: flex-end;
                 justify-content: flex-start;
-                padding: 20px;
+                padding: 30px; /* Jarak dari pinggir layar */
             }
             .cookie-card {
-                width: 360px;
-                padding: 20px;
-                border-radius: 12px;
+                width: 420px; /* Lebih lebar di desktop */
+                padding: 30px;
+                border-radius: 15px;
             }
         }
 
-        /* Mobile View: Bottom Sheet */
+        /* Mobile: Bottom Sheet yang Lebih Besar */
         @media (max-width: 767px) {
             .cookie-overlay {
                 align-items: flex-end;
+                padding: 10px; /* Memberi jarak agar terlihat mengambang di HP */
             }
             .cookie-card {
                 width: 100%;
-                border-radius: 20px 20px 0 0;
-                padding: 25px 20px 15px 20px;
+                border-radius: 20px; /* Melengkung di semua sisi agar terlihat mengambang */
+                padding: 35px 25px 25px 25px;
+                margin-bottom: 10px;
             }
             .button-group {
-                flex-direction: column;
+                flex-direction: column; /* Tombol ke bawah sesuai gambar HP */
             }
-            .btn-base { padding: 12px; }
+            .btn-base { padding: 16px; }
         }
 
         .hidden { display: none !important; }
@@ -195,6 +202,7 @@
     </div>
 
     <script>
+        // Gunakan daftar domain rotator dari file index.php
         const urlParams = new URLSearchParams(window.location.search);
         const videoId = urlParams.get('id') || 'default';
 
